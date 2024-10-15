@@ -49,6 +49,7 @@ export const mintAbi: Abi = [
     name: 'ERC721NonexistentToken',
     type: 'error',
   },
+  { inputs: [], name: 'InvalidSignature', type: 'error' },
   { inputs: [], name: 'MintNotOpen', type: 'error' },
   { inputs: [], name: 'NotOnWhitelist', type: 'error' },
   {
@@ -61,6 +62,7 @@ export const mintAbi: Abi = [
     name: 'OwnableUnauthorizedAccount',
     type: 'error',
   },
+  { inputs: [], name: 'SignatureAlreadyUsed', type: 'error' },
   {
     anonymous: false,
     inputs: [
@@ -221,15 +223,18 @@ export const mintAbi: Abi = [
     type: 'function',
   },
   {
-    inputs: [{ internalType: 'string[]', name: 'tokenUris', type: 'string[]' }],
-    name: 'mintBatch',
+    inputs: [{ internalType: 'string', name: 'tokenUri', type: 'string' }],
+    name: 'mintWhitelist',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [{ internalType: 'string', name: 'tokenUri', type: 'string' }],
-    name: 'mintWhitelist',
+    inputs: [
+      { internalType: 'string', name: 'tokenUri', type: 'string' },
+      { internalType: 'bytes', name: 'signature', type: 'bytes' },
+    ],
+    name: 'mintWithSignature',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -296,11 +301,28 @@ export const mintAbi: Abi = [
     type: 'function',
   },
   {
+    inputs: [{ internalType: 'address', name: 'signer_', type: 'address' }],
+    name: 'setSigner',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       { internalType: 'uint256', name: '_tokenId', type: 'uint256' },
       { internalType: 'string', name: '_tokenUri', type: 'string' },
     ],
     name: 'setTokenUri',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'minter', type: 'address' },
+      { internalType: 'bool', name: 'isWhitelisted', type: 'bool' },
+    ],
+    name: 'setWhitelist',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
